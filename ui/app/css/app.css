@@ -89,3 +89,21 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .about{
     background-color:#AAD845;
 }
+
+.about p{
+    max-width:900px;
+    margin: 0 auto;
+}
+
+/*hospital lists*/
+
+.hospital-card{
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 3px rgba(0,0,0,.15);
+  display: block;
+  padding: 16px;
+  position: relative;
+  z-index: 1;
+  margin-bottom:20px;
+}
