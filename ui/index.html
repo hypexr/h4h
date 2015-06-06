@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>H4H</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+
+    <!-- build:remove -->
+    <link rel="stylesheet" href="app/css/app.css">
+
+    <script src="http://localhost:9098/livereload.js"></script>
+    <!-- /build -->
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="bower_components/html5shiv/dist/html5shiv.min.js"></script>
+    <script src="bower_components/respond/dest/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<script type="text/x-handlebars">
+    <div id="main-header">
+        header
+        {{#link-to 'auth'}}Login{{/link-to}}
+    </div>
+    <div id="main-panel-container">
+        content
+    </div>
+
+    {{outlet}}
+
+</script>
+
+<script type="text/x-handlebars" id="auth">
+    <div style="width: 300px; margin:auto;">
+        <div id="login-error" class="alert alert-danger hide">
+        </div>
+
+        <form>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                {{input action="submitLogin" type="email" id="email" class="form-control" valueBinding="email" placeholder="Email Address"}}
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                {{input action="submitLogin" type="password" id="password" class="form-control" valueBinding="password" placeholder="Password"}}
+            </div>
+            <button {{action 'submitLogin'}} type="button" class="btn btn-info btn-lg btn-block">
+            Log In
+            </button>
+        </form>
+    </div>
+</script>
+
+<script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/handlebars/handlebars.js"></script>
+<script src="bower_components/ember/ember.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="app/js/app.js"></script>
+
+</body>
+</html>
+

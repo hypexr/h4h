@@ -1,0 +1,18 @@
+
+CREATE TABLE `users` (
+  `id` MEDIUMINT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(255) DEFAULT NULL,
+  `first_name` VARCHAR(255) DEFAULT NULL,
+  `last_name` VARCHAR(255) DEFAULT NULL,
+  `hashed_password` VARCHAR(255) DEFAULT NULL,
+  `salt` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `comments` (
+  `id` MEDIUMINT NOT NULL AUTO_INCREMENT,
+  `user_id` MEDIUMINT,
+  `message` TEXT DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `comments_user_id_idx` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
