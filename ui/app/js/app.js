@@ -6,82 +6,30 @@ App = Em.Application.create({
 App.Router.map(function() {
     this.resource('auth', { path: '/login' });
     this.resource('test', { path: '/test' });
+    this.resource('hospitals', { path: '/hospitals' });
+});
+
+
+/*
+ * Routes
+ */
+App.HospitalsRoute = Em.Route.extend({
+    model: function() {
+        var route = this;
+
+        return App.Hospital.fetch();
+    }
+
+    //afterModel: function() {
+    //    var route = this;
+    //    route.transitionTo('stores');
+    //},
 });
 
 
 /*
  * Controllers
  */
-App.AuthController = Em.ObjectController.extend({
-    loginError: false,
-
-    // Values from the login form
-    email: null,
-    password: null,
-
-    login: function(controller, formUsername, formPassword) {
-
-        return new Em.RSVP.Promise(function(resolve, reject) {
-            var uri = '%@/authenticate'.fmt(App.apiBaseUri);
-            var sendData = {};
-            sendData['email'] = formUsername;
-            sendData['password'] = formPassword;
-            console.log(sendData);
-
-            Em.$.ajax({
-                type: "POST",
-                url: uri,
-                data: JSON.stringify(sendData),
-                contentType: 'application/json',
-                complete: function(xhr) {
-                    if(/2../.exec(xhr.status)) {
-                        if(! Em.isNone(controller.get('loginError'))) {
-                            controller.set('loginError', false);
-                        }
-
-                        //var user = Em.$.parseJSON(xhr.responseText)['data'];
-                        //controller._displayAuthenticatedUser(user);
-
-                        controller.transitionToRoute('test');
-                    } else {
-                        if(! Em.isNone(controller.get('loginError'))) {
-                            controller.set('loginError', true);
-                        }
-                    }
-                }
-            });
-        });
-    },
-
-    logout: function() {
-        var controller = this;
-
-        return new Em.RSVP.Promise(function(resolve, reject) {
-            var uri = '%@/logout'.fmt(App.apiBaseUri);
-            Em.$.ajax({
-                type: "POST",
-                url: uri,
-                complete: function(xhr) {
-                    if(/2../.exec(xhr.status)) {
-                        resolve();
-                    } else {
-                        reject();
-                    }
-                }
-            });
-        });
-    },
-
-    actions: {
-        submitLogin: function() {
-            var controller = this;
-            var formUsername = controller.get('email');
-            var formPassword = controller.get('password');
-            return controller.login(this, formUsername, formPassword);
-        }
-    }
-});
-
 
 
 /*
@@ -92,5 +40,21 @@ App.AuthController = Em.ObjectController.extend({
 App.reopen({
     apiBaseUri: 'api',
 });
+
+
+/*
+ *
+ * Models
+ *
+ */
+var attr = Em.attr, hasMany = Em.hasMany;
+
+App.Hospital = Em.Model.extend({
+    id: attr(),
+    name: attr()
+});
+App.Hospital.url = App.apiBaseUri + '/hospitals';
+App.Hospital.camelizeKeys = true;
+App.Hospital.adapter = Em.RESTAdapter.create();
 
 

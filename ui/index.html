@@ -26,25 +26,24 @@
 <script type="text/x-handlebars">
     <div id="main-header">
         <!-- Fixed navbar -->
-    <div class="navbar navbar-default navbar-static-top bright-blue" id="nav">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-          </div>
-          <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#about" class="white-font">About HospitalMe</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container -->
-    </div><!--/.navbar -->
-    
-        
+        <div class="navbar navbar-default navbar-static-top bright-blue" id="nav">
+            <div class="container">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#about" class="white-font">About HospitalMe</a></li>
+                </ul>
+              </div><!--/.nav-collapse -->
+            </div><!--/.container -->
+        </div><!--/.navbar -->
     </div>
+    
     <div id="main-panel-container">
         <div class="wiz-container">
             <div class="container">
@@ -72,37 +71,44 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <!--About us-->
-    <div class="about">
-        <div class="container">
-            <div class="row content-padding">
-                <div class="col-xs-12">
-                    <h2 class="title-size text-center">
-                        What is HospitalMe?
-                    </h2>
-                <p class="text-center">I am so cool
-                Roof party health goth taxidermy, DIY twee squid Schlitz artisan
-                hashtag. Four dollar toast whatever irony pug migas. Art party
-                farm-to-table PBR flexitarian Bushwick freegan, tote bag +1 kogi
-                cray Carles locavore Austin listicle roof party.
-                <p>3 wolf moon
-                chambray 8-bit, four loko gentrify listicle pug seitan Brooklyn yr
-                pickled. Vegan pickled vinyl, lo-fi narwhal listicle Austin
-                wayfarers mustache. Dreamcatcher banjo craft beer, bespoke scenester
-                narwhal 3 wolf moon semiotics Carles four loko plaid sriracha
-                Bushwick Godard Blue Bottle. Master cleanse meh you probably haven't
-                heard of them cronut tilde small batch.
-                </p>
-                </p>
+        {{outlet}}
+
+        <!--About us-->
+        <div class="about">
+            <div class="container">
+                <div class="row content-padding">
+                    <div class="col-xs-12">
+                        <h2 class="title-size text-center">
+                            What is HospitalMe?
+                        </h2>
+                        <p class="text-center">I am so cool
+                        Roof party health goth taxidermy, DIY twee squid Schlitz artisan
+                        hashtag. Four dollar toast whatever irony pug migas. Art party
+                        farm-to-table PBR flexitarian Bushwick freegan, tote bag +1 kogi
+                        cray Carles locavore Austin listicle roof party.
+                        </p>
+                        <p>3 wolf moon
+                        chambray 8-bit, four loko gentrify listicle pug seitan Brooklyn yr
+                        pickled. Vegan pickled vinyl, lo-fi narwhal listicle Austin
+                        wayfarers mustache. Dreamcatcher banjo craft beer, bespoke scenester
+                        narwhal 3 wolf moon semiotics Carles four loko plaid sriracha
+                        Bushwick Godard Blue Bottle. Master cleanse meh you probably haven't
+                        heard of them cronut tilde small batch.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
-            
-        </div>
     </div>
-    {{outlet}}
+</script>
 
+<script type="text/x-handlebars" id="hospitals">
+    Hospitals:
+    {{#each hospital in model}}
+        {{hospital.name}}
+        <br />
+    {{/each}}
 </script>
 
 <script type="text/x-handlebars" id="auth">
@@ -129,6 +135,7 @@
 <script src="bower_components/jquery/jquery.js"></script>
 <script src="bower_components/handlebars/handlebars.js"></script>
 <script src="bower_components/ember/ember.js"></script>
+<script src="bower_components/ember-model/ember-model.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="app/js/app.js"></script>
 
