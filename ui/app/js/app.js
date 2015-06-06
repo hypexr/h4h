@@ -13,22 +13,21 @@ App.Router.map(function() {
 /*
  * Routes
  */
-App.ApplicationRoute = Em.Route.extend({
-    setupController: function(controller, model) {
-        controller.set('fullHeader', true);
-    }
-});
+//App.ApplicationRoute = Em.Route.extend({
+//    setupController: function(controller, model) {
+//        controller.set('fullHeader', true);
+//    }
+//});
 
 App.HospitalsRoute = Em.Route.extend({
     model: function(params) {
         return App.Hospital.fetch({'rating_criteria': params.criteria_id, 'county': 'Fresno'});
     },
 
-    setupController: function(controller, model) {
-        var route = this;
-        route.controllerFor('application').set('fullHeader', false);
-        controller.set('model', model);
-    }
+    //setupController: function(controller, model) {
+    //    var route = this;
+    //    controller.set('model', model);
+    //}
 
     //afterModel: function() {
     //    var route = this;
@@ -40,19 +39,38 @@ App.HospitalsRoute = Em.Route.extend({
 /*
  * Controllers
  */
-App.ApplicationController = Em.ArrayController.extend({
-    fullHeader: true
+App.ApplicationController = Ember.ObjectController.extend({
+    fullHeader: true,
+
+    init: function() {
+        var controller = this;
+        controller._super();
+    },
+
+    currentPathChanged: function() {
+        var controller = this;
+
+        Em.Logger.info("ApplicationController current path: " + this.get('currentPath'));
+
+        if(controller.get('currentPath') == 'index') {
+            controller.set('fullHeader', true);
+        }
+
+        if(controller.get('currentPath') != 'index') {
+            controller.set('fullHeader', false);
+        }
+    }.observes('currentPath')
 });
 
-App.HospitalsController = Em.ArrayController.extend({
+App.HospitalsController = Em.ObjectController.extend({
     needs: ['application'],
 
-    //init: function() {
-    //    var controller = this;
-    //    Em.Logger.info("in hosp controller");
-    //    var appController = controller.get('controllers.application');
-    //    appController.set('fullHeader', false);
-    //}
+    init: function() {
+        var controller = this;
+        Em.Logger.info("in hosp controller");
+        var appController = controller.get('controllers.application');
+        appController.set('fullHeader', false);
+    }
 });
 
 
