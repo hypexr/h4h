@@ -2,7 +2,7 @@ require 'sinatra/base'
 require 'data_mapper'
 require 'json'
 
-DataMapper.setup(:default, 'mysql://localhost/temp')
+DataMapper.setup(:default, 'mysql://localhost/h4h')
 
 gem 'soda-ruby', :require => 'soda'
 require 'soda/client'
@@ -12,8 +12,15 @@ require 'rest-client'
 require_relative 'authorization'
 require_relative 'models/user'
 require_relative 'models/comment'
+require_relative 'models/hospital'
+require_relative 'models/procedure'
+require_relative 'models/hospital_procedure'
 
-class Template < Sinatra::Base
+# DataMapper.finalize
+#
+# DataMapper.auto_migrate!
+
+class App < Sinatra::Base
 
   enable :sessions
   set :session_secret, "9f8099cb17e047f3b4a7eaad840103f7977ad0496b124ac7bf234abd5d5b6a128a491d89236745f8ab134cbcb172b984"
@@ -100,11 +107,15 @@ class Template < Sinatra::Base
     session.delete :user_id
   end
 
+  get('/hospitals') do
+    return Hospital.all().to_json
+  end
+
   before do
-    # Verify authenticated
-    if not request.path.eql? '/authenticate'
-      throw :halt, [ 401, 'Authorization Required' ] unless session[:user_id]
-    end
+    # # Verify authenticated
+    # if not request.path.eql? '/authenticate'
+    #   throw :halt, [ 401, 'Authorization Required' ] unless session[:user_id]
+    # end
 
     # Load the body as JSON into @body for POST and PUT requests
     if request.request_method.eql? "POST" or request.request_method.eql? "PUT"

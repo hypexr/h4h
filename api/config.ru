@@ -1,2 +1,2 @@
-require './template'
-run Template
+require './app'
+run App
