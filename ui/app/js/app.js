@@ -6,7 +6,7 @@ App = Em.Application.create({
 App.Router.map(function() {
     this.resource('auth', { path: '/login' });
     this.resource('test', { path: '/test' });
-    this.resource('hospitals', { path: '/hospitals' });
+    this.resource('hospitals', { path: '/hospitals/:criteria_id' });
 });
 
 
@@ -14,10 +14,11 @@ App.Router.map(function() {
  * Routes
  */
 App.HospitalsRoute = Em.Route.extend({
-    model: function() {
+    model: function(params) {
         var route = this;
 
-        return App.Hospital.fetch({'rating_criteria': 'CLABSI', 'county': 'Fresno'});
+        Em.Logger.info("paramas: ", params);
+        return App.Hospital.fetch({'rating_criteria': params.criteria_id, 'county': 'Fresno'});
     }
 
     //afterModel: function() {

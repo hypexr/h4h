@@ -54,19 +54,25 @@
                         </h1>
                     </div>
                     <div class="col-xs-12 col-sm-4">
-                        <div class="infection1">
-                            <h2 class="white-font text-center">Infection</h2>
-                        </div>
+                        {{#link-to 'hospitals' 'SSIs'}}
+                            <div class="rank-criteria-box">
+                                <h2 class="white-font text-center">SSIs Infection Rates</h2>
+                            </div>
+                        {{/link-to}}
                     </div>
                     <div class="col-xs-12 col-sm-4">
-                        <div class="mortality1">
-                            <h2 class="white-font text-center">Mortality</h2>
-                        </div>
+                        {{#link-to 'hospitals' 'CLABSI'}}
+                            <div class="rank-criteria-box">
+                                <h2 class="white-font text-center">CLABSI Infection Rates</h2>
+                            </div>
+                        {{/link-to}}
                     </div>
                     <div class="col-xs-12 col-sm-4">
-                        <div class="overall-rank1">
-                            <h2 class="white-font text-center">Overall Best</h2>
-                        </div>
+                        {{#link-to 'hospitals' 'mortality'}}
+                            <div class="rank-criteria-box">
+                                <h2 class="white-font text-center">Mortality Rates</h2>
+                            </div>
+                        {{/link-to}}
                     </div>
                 </div>
             </div>
