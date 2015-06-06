@@ -26,7 +26,7 @@
 <script type="text/x-handlebars">
     <div id="main-header">
         <!-- Fixed navbar -->
-        <div class="navbar navbar-default navbar-static-top bright-blue" id="nav">
+        <div class="navbar navbar-default navbar-fixed-top bright-blue" id="nav">
             <div class="container">
               <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -45,7 +45,7 @@
     </div>
     
     <div id="main-panel-container">
-        <div class="wiz-container">
+        <div id="wiz-container">
             <div class="container">
                 <div class="row wizard-padding">
                     <div class="col-xs-12">
@@ -75,7 +75,7 @@
         {{outlet}}
 
         <!--About us-->
-        <div class="about">
+        <div id="about">
             <div class="container">
                 <div class="row content-padding">
                     <div class="col-xs-12">
@@ -101,14 +101,39 @@
             </div>
         </div>
     </div>
+    
+
 </script>
 
 <script type="text/x-handlebars" id="hospitals">
-    Hospitals:
-    {{#each hospital in model}}
-        {{hospital.name}}
-        <br />
-    {{/each}}
+        <!--list of hospitals-->
+        <div id="hospitals" class="content-padding">
+            <div class="container">
+                <h2 class="text-center">Overall Hospital Ratings</h2>
+                {{#each hospital in model}}
+                    <div class="hospital-spacer">
+                        <div class="hospital-card">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h3>{{hospital.name}}</h3>
+                                </div>
+                                <div class="col-md-7">
+                                    <p>rating</p>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                          <span class="sr-only">40% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="btn btn-info btn-lg pull-right">Read More</div>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
 </script>
 
 <script type="text/x-handlebars" id="auth">

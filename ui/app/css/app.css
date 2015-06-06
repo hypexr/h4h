@@ -1,6 +1,6 @@
 /*Amanda Tjahjadi, Scott Rippee
  *Hackathon Project for CA Civic Data
- */
+*/
 
 body{
     font-family: Lato;
@@ -54,15 +54,15 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 /*wizard area styles*/
-.wiz-container{
+#wiz-container{
     background:url("../../img/valley.jpg");
     background-size: cover;
-    height:;
+    height:700px;
     background-repeat:no-repeat;
 }
 
 .infection1{
-    width:200px;
+    width:300px;
     height:200px;
     background-color:#7D8789;
     position:relative;
@@ -70,7 +70,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .mortality1{
-    width:200px;
+    width:300px;
     height:200px;
     background-color:#7D8789;
     position:relative;
@@ -78,7 +78,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .overall-rank1{
-    width:200px;
+    width:300px;
     height:200px;
     background-color:#7D8789;
     position:relative;
@@ -86,7 +86,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 /*about us*/
-.about{
+#about{
     background-color:#AAD845;
 }
 
@@ -96,14 +96,21 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 /*hospital lists*/
+.hospital-spacer{
+    padding-bottom:20px;
+}
 
 .hospital-card{
   background-color: #fff;
-  border-radius: 2px;
+  border:2px solid #D0D1CF;
+  border-radius: 5px;
   box-shadow: 0 2px 3px rgba(0,0,0,.15);
   display: block;
   padding: 16px;
   position: relative;
   z-index: 1;
   margin-bottom:20px;
+  max-width:800px;
+  margin:0 auto;
+  padding-bottom:10px;
 }
