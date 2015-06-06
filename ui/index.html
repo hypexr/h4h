@@ -45,41 +45,59 @@
     </div>
     
     <div id="main-panel-container">
-        <div id="wiz-container">
-            <div class="container">
-                <div class="row wizard-padding">
-                    <div class="col-xs-12">
-                        <h1 class="white-font title-size text-center wizard-title">
-                            Explore Central California's hospital quality
-                        </h1>
-                        <div class="text-center wizard-title" style="margin-top: -60px;">
-                            Easily find hospitals with the lowest infection and mortality rates
+        {{#if fullHeader}}
+            <div id="wiz-container">
+                <div class="container">
+                    <div class="row wizard-padding">
+                        <div class="col-xs-12">
+                            <h1 class="white-font title-size text-center wizard-title">
+                                Explore Central California's hospitals
+                            </h1>
+                            <div class="text-center wizard-title" style="margin-top: -60px;">
+                                Easily find hospitals with the lowest infection and mortality rates
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            {{#link-to 'hospitals' 'SSIs'}}
+                                <div class="rank-criteria-box">
+                                    <h2 class="white-font text-center">SSIs Infection Rates</h2>
+                                </div>
+                            {{/link-to}}
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            {{#link-to 'hospitals' 'CLABSI'}}
+                                <div class="rank-criteria-box">
+                                    <h2 class="white-font text-center">CLABSI Infection Rates</h2>
+                                </div>
+                            {{/link-to}}
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            {{#link-to 'hospitals' 'mortality'}}
+                                <div class="rank-criteria-box">
+                                    <h2 class="white-font text-center">Mortality Rates</h2>
+                                </div>
+                            {{/link-to}}
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-4">
+                </div>
+            </div>
+        {{else}}
+            <div id="wiz-container-small">
+                <div class="container">
+                    <div class="row wizard-padding">
                         {{#link-to 'hospitals' 'SSIs'}}
-                            <div class="rank-criteria-box">
-                                <h2 class="white-font text-center">SSIs Infection Rates</h2>
-                            </div>
+                            <p class="white-font text-center">SSIs Infection Rates</p>
                         {{/link-to}}
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
                         {{#link-to 'hospitals' 'CLABSI'}}
-                            <div class="rank-criteria-box">
-                                <h2 class="white-font text-center">CLABSI Infection Rates</h2>
-                            </div>
+                            <p class="white-font text-center">CLABSI Infection Rates</p>
                         {{/link-to}}
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
                         {{#link-to 'hospitals' 'mortality'}}
-                            <div class="rank-criteria-box">
-                                <h2 class="white-font text-center">Mortality Rates</h2>
-                            </div>
+                            <p class="white-font text-center">Mortality Rates</p>
                         {{/link-to}}
                     </div>
                 </div>
             </div>
-        </div>
+        {{/if}}
 
         {{outlet}}
 
