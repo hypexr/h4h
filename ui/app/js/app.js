@@ -23,8 +23,9 @@ App.ApplicationRoute = Em.Route.extend({
 
 App.HospitalsRoute = Em.Route.extend({
     model: function(params) {
-        return App.Hospital.fetch({'rating_criteria': params.criteria_id, 'county': 'Fresno'});
-    },
+        //return App.Hospital.fetch({'rating_criteria': params.criteria_id, 'county': 'Fresno'});
+        return App.Hospital.fetch({'rating_criteria': params.criteria_id});
+    }
 
     //setupController: function(controller, model) {
     //    var route = this;
@@ -95,7 +96,8 @@ var attr = Em.attr, hasMany = Em.hasMany;
 
 App.Hospital = Em.Model.extend({
     id: attr(),
-    name: attr()
+    name: attr(),
+    display_percentage: attr()
 });
 App.Hospital.url = App.apiBaseUri + '/hospitals';
 App.Hospital.camelizeKeys = true;

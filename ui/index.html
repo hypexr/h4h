@@ -169,10 +169,11 @@
                                 <div class="col-md-7">
                                     <p>rating</p>
                                     <div class="progress">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                          <span class="sr-only">40% Complete (success)</span>
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" {{bind-style width="hospital.display_percentage" width-unit="%"}}>
+                                            <span class="sr-only">{{hospital.display_percentage}}% incidents</span>
                                         </div>
                                     </div>
+                                    <div>{{hospital.display_percentage}}% incidents</div>
                                 </div>
                             </div>  
                         </div>
@@ -208,6 +209,7 @@
 <script src="bower_components/ember/ember.js"></script>
 <script src="bower_components/ember-model/ember-model.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="components/bindstyle-ember-helper-f741839627/src/bindstyle-ember-helper.js"></script>
 <script src="app/js/app.js"></script>
 
 <script type="text/javascript">

@@ -39,6 +39,30 @@ counties = [
     "Tuolumne"
 ]
 
+
+def set_hospital_display_percentage(hospital, min_occurrences, max_occurrences)
+  # top_limit = max_occurrences - min_occurrences
+  # stdandardized_occurrences = hospital.occurrences - min_occurrences
+  # if(top_limit == 0)
+  #   hospital.display_percentage = 0
+  # else
+  #   hospital.display_percentage = (stdandardized_occurrences / top_limit) * 100
+  # end
+
+  if(hospital.display_percentage == nil)
+    if(hospital.out_of == 0)
+      hospital.display_percentage = 0
+    else
+      puts "Criteria: #{hospital.rating_criteria}. Procedure: #{hospital.procedure}. County: #{hospital.county}. Occurrences: #{hospital.occurrences}. Out of: #{hospital.out_of}"
+      hospital.display_percentage = (hospital.occurrences.to_f / hospital.out_of.to_f) * 100
+    end
+  end
+  hospital.save
+  puts "............. #{hospital.name} rank: #{hospital.display_percentage}"
+end
+
+
+
 #
 #
 # Ingest Surgical Site Infections SSI data
@@ -111,16 +135,12 @@ counties.each do |county|
 end
 
 # Set min and max occurrences for each record that was inserted
+min_occurrences = 0 if min_occurrences != Integer::MAX
 hospitals = Hospital.all()
 hospitals.each do |hospital|
-  if min_occurrences != Integer::MAX
-    hospital.min_occurrences = min_occurrences
-  else
-    hospital.min_occurrences = 0
-  end
-
+  hospital.min_occurrences = min_occurrences
   hospital.max_occurrences = max_occurrences
-  hospital.save
+  set_hospital_display_percentage(hospital, min_occurrences, max_occurrences)
 end
 
 
@@ -157,16 +177,12 @@ procedures.each do |procedure|
   end
 
   # Set min and max occurrences for each record that was inserted
+  min_occurrences = 0 if min_occurrences != Integer::MAX
   hospitals = Hospital.all({'rating_criteria': 'SSIs', 'procedure': procedure, 'county': nil})
   hospitals.each do |hospital|
-    if min_occurrences != Integer::MAX
-      hospital.min_occurrences = min_occurrences
-    else
-      hospital.min_occurrences = 0
-    end
-
+    hospital.min_occurrences = min_occurrences
     hospital.max_occurrences = max_occurrences
-    hospital.save
+    set_hospital_display_percentage(hospital, min_occurrences, max_occurrences)
   end
 end
 
@@ -204,16 +220,12 @@ counties.each do |county|
   end
 
   # Set min and max occurrences for each record that was inserted
+  min_occurrences = 0 if min_occurrences != Integer::MAX
   hospitals = Hospital.all({'rating_criteria': 'SSIs', 'county': county, 'procedure': nil})
   hospitals.each do |hospital|
-    if min_occurrences != Integer::MAX
-      hospital.min_occurrences = min_occurrences
-    else
-      hospital.min_occurrences = 0
-    end
-
+    hospital.min_occurrences = min_occurrences
     hospital.max_occurrences = max_occurrences
-    hospital.save
+    set_hospital_display_percentage(hospital, min_occurrences, max_occurrences)
   end
 end
 
@@ -252,16 +264,12 @@ hospitals.each do |hospital|
 end
 
 # Set min and max occurrences for each record that was inserted
+min_occurrences = 0 if min_occurrences != Integer::MAX
 hospitals = Hospital.all({'rating_criteria': 'SSIs', 'procedure': nil, 'county': nil})
 hospitals.each do |hospital|
-  if min_occurrences != Integer::MAX
-    hospital.min_occurrences = min_occurrences
-  else
-    hospital.min_occurrences = 0
-  end
-
+  hospital.min_occurrences = min_occurrences
   hospital.max_occurrences = max_occurrences
-  hospital.save
+  set_hospital_display_percentage(hospital, min_occurrences, max_occurrences)
 end
 
 
@@ -288,7 +296,7 @@ counties.each do |county|
   client = SODA::Client.new({:domain => "chhs.data.ca.gov"})
   soda_response = client.get("652m-fw2m", {"county": county})
 
-  # puts soda_response.to_s
+  puts soda_response.to_s
 
   soda_response.each do |record|
 
@@ -325,6 +333,15 @@ counties.each do |county|
     hospital.occurrences = 0 if hospital.occurrences.nil?
     hospital.out_of = record['of_cases']
     hospital.out_of = 0 if hospital.out_of.nil?
+    rate = record['risk_adjuested_mortality_rate']
+    #if(rate.is_a? Numeric)
+      puts "===================rate #{rate}"
+      puts "===================rate #{rate}"
+      hospital.display_percentage = rate.to_f
+    # else
+    #   hospital.display_percentage = 0
+    #   hospital.occurrence_data_available = false
+    # end
     hospital.save
 
     if hospital.occurrences != nil and hospital.occurrences < min_occurrences
@@ -345,16 +362,12 @@ counties.each do |county|
 end
 
 # Set min and max occurrences for each record that was inserted
+min_occurrences = 0 if min_occurrences != Integer::MAX
 hospitals = Hospital.all()
 hospitals.each do |hospital|
-  if min_occurrences != Integer::MAX
-    hospital.min_occurrences = min_occurrences
-  else
-    hospital.min_occurrences = 0
-  end
-
+  hospital.min_occurrences = min_occurrences
   hospital.max_occurrences = max_occurrences
-  hospital.save
+  set_hospital_display_percentage(hospital, min_occurrences, max_occurrences)
 end
 
 
@@ -391,16 +404,12 @@ procedures.each do |procedure|
   end
 
   # Set min and max occurrences for each record that was inserted
+  min_occurrences = 0 if min_occurrences != Integer::MAX
   hospitals = Hospital.all({'rating_criteria': 'mortality', 'procedure': procedure, 'county': nil})
   hospitals.each do |hospital|
-    if min_occurrences != Integer::MAX
-      hospital.min_occurrences = min_occurrences
-    else
-      hospital.min_occurrences = 0
-    end
-
+    hospital.min_occurrences = min_occurrences
     hospital.max_occurrences = max_occurrences
-    hospital.save
+    set_hospital_display_percentage(hospital, min_occurrences, max_occurrences)
   end
 end
 
@@ -438,19 +447,14 @@ counties.each do |county|
   end
 
   # Set min and max occurrences for each record that was inserted
+  min_occurrences = 0 if min_occurrences != Integer::MAX
   hospitals = Hospital.all({'rating_criteria': 'mortality', 'county': county, 'procedure': nil})
   hospitals.each do |hospital|
-    if min_occurrences != Integer::MAX
-      hospital.min_occurrences = min_occurrences
-    else
-      hospital.min_occurrences = 0
-    end
-
+    hospital.min_occurrences = min_occurrences
     hospital.max_occurrences = max_occurrences
-    hospital.save
+    set_hospital_display_percentage(hospital, min_occurrences, max_occurrences)
   end
 end
-
 
 
 
@@ -486,16 +490,12 @@ hospitals.each do |hospital|
 end
 
 # Set min and max occurrences for each record that was inserted
+min_occurrences = 0 if min_occurrences != Integer::MAX
 hospitals = Hospital.all({'rating_criteria': 'mortality', 'procedure': nil, 'county': nil})
 hospitals.each do |hospital|
-  if min_occurrences != Integer::MAX
-    hospital.min_occurrences = min_occurrences
-  else
-    hospital.min_occurrences = 0
-  end
-
+  hospital.min_occurrences = min_occurrences
   hospital.max_occurrences = max_occurrences
-  hospital.save
+  set_hospital_display_percentage(hospital, min_occurrences, max_occurrences)
 end
 
 
@@ -553,16 +553,12 @@ counties.each do |county|
 end
 
 # Set min and max occurrences for each record that was inserted
+min_occurrences = 0 if min_occurrences != Integer::MAX
 hospitals = Hospital.all()
 hospitals.each do |hospital|
-  if min_occurrences != Integer::MAX
-    hospital.min_occurrences = min_occurrences
-  else
-    hospital.min_occurrences = 0
-  end
-
+  hospital.min_occurrences = min_occurrences
   hospital.max_occurrences = max_occurrences
-  hospital.save
+  set_hospital_display_percentage(hospital, min_occurrences, max_occurrences)
 end
 
 
@@ -599,16 +595,12 @@ counties.each do |county|
   end
 
   # Set min and max occurrences for each record that was inserted
+  min_occurrences = 0 if min_occurrences != Integer::MAX
   hospitals = Hospital.all({'rating_criteria': 'CLABSI', 'county': county, 'procedure': nil})
   hospitals.each do |hospital|
-    if min_occurrences != Integer::MAX
-      hospital.min_occurrences = min_occurrences
-    else
-      hospital.min_occurrences = 0
-    end
-
+    hospital.min_occurrences = min_occurrences
     hospital.max_occurrences = max_occurrences
-    hospital.save
+    set_hospital_display_percentage(hospital, min_occurrences, max_occurrences)
   end
 end
 
@@ -647,16 +639,13 @@ hospitals.each do |hospital|
 end
 
 # Set min and max occurrences for each record that was inserted
+min_occurrences = 0 if min_occurrences != Integer::MAX
 hospitals = Hospital.all({'rating_criteria': 'CLABSI', 'procedure': nil, 'county': nil})
 hospitals.each do |hospital|
-  if min_occurrences != Integer::MAX
-    hospital.min_occurrences = min_occurrences
-  else
-    hospital.min_occurrences = 0
-  end
-
+  hospital.min_occurrences = min_occurrences
   hospital.max_occurrences = max_occurrences
-  hospital.save
+  hospital.out_of = max_occurrences
+  set_hospital_display_percentage(hospital, min_occurrences, max_occurrences)
 end
 
 

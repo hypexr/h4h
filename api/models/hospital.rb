@@ -20,7 +20,8 @@ class Hospital
   property :risk_ratio,           Integer
   property :min_occurrences,      Integer
   property :max_occurrences,      Integer
-  property :display_ratio,        Integer
+  property :display_percentage,   Float
+  property :occurrence_data_available,   Boolean
 
   # has n, :hospital_procedures
   # has n, :procedures, through: :hospital_procedures
@@ -34,6 +35,8 @@ class Hospital
       self.county = hospital.county
       self.occurrences = hospital.occurrences
       self.out_of = hospital.out_of
+      self.display_percentage = hospital.display_percentage
+      self.occurrence_data_available = hospital.occurrence_data_available
     end
   end
 end
