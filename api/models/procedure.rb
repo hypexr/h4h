@@ -12,6 +12,6 @@ class Procedure
   property :id,                   Serial
   property :name,                 String
 
-  has n, :hospital_procedures
-  has n, :hospitals, through: :hospital_procedures
+  # has n, :hospital_procedures
+  # has n, :hospitals, through: :hospital_procedures
 end

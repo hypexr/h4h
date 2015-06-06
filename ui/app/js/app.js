@@ -17,7 +17,7 @@ App.HospitalsRoute = Em.Route.extend({
     model: function() {
         var route = this;
 
-        return App.Hospital.fetch();
+        return App.Hospital.fetch({'rating_criteria': 'SSIs', 'county': 'Fresno'});
     }
 
     //afterModel: function() {

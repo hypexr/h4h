@@ -13,6 +13,18 @@ require 'soda/client'
 #
 # puts soda_response.to_s
 
+class Integer
+  N_BYTES = [42].pack('i').size
+  N_BITS = N_BYTES * 16
+  MAX = 2 ** (N_BITS - 2) - 1
+  MIN = -MAX - 1
+end
+
+# Clear old hospital data
+hospitals = Hospital.all()
+hospitals.each do |hospital|
+  hospital.destroy
+end
 
 counties = [
     "Fresno",
@@ -27,33 +39,22 @@ counties = [
     "Tuolumne"
 ]
 
+min_occurrences = Integer::MAX
+max_occurrences = 0
+procedures = []
 counties.each do |county|
   puts
   puts "#{county} County -----------------------------"
   puts
 
+  # Surgical Site Infections SSIs
   client = SODA::Client.new({:domain => "cdph.data.ca.gov"})
   soda_response = client.get("d4t7-iig6", {"county": county})
 
-  puts soda_response.to_s
+  # puts soda_response.to_s
 
   soda_response.each do |record|
-    hospital_name = record['facility_name1']
-    procedure_name = record['operative_procedure']
-    puts "County #{record['county']}"
-    puts "Facility #{hospital_name}"
-    puts "Infection Count #{record['infection_count']}"
-    puts "Procedure Count #{record['procedure_count']}"
-    puts "Procedure #{procedure_name}"
-    puts
-
-    hospital = Hospital.all(name: hospital_name).first
-    if hospital.nil?
-      hospital = Hospital.new
-      hospital.name = hospital_name
-      hospital.save
-    end
-
+    procedure_name = record['operative_procedure'].strip
     procedure = Procedure.all(name: procedure_name).first
     if procedure.nil?
       procedure = Procedure.new
@@ -61,15 +62,210 @@ counties.each do |county|
       procedure.save
     end
 
-    hospital.procedures << procedure
+    if not procedures.include? procedure.name
+      procedures << procedure.name
+    end
+  end
+
+  soda_response.each do |record|
+    procedure_name = record['operative_procedure']
+    puts "County #{record['county']}"
+    puts "Facility #{record['facility_name1']}"
+    puts "Infection Count #{record['infection_count']}"
+    puts "Procedure Count #{record['procedure_count']}"
+    puts "Procedure #{procedure_name}"
+    puts
+
+    hospital = Hospital.new
+    hospital.name = record['facility_name1']
+    hospital.procedure = procedure_name
+    hospital.county = county
+    hospital.rating_criteria = 'SSIs'
+    hospital.occurrences = record['infection_count']
+    hospital.occurrences = 0 if hospital.occurrences.nil?
+    hospital.out_of = record['procedure_count']
     hospital.save
 
+    if hospital.occurrences != nil and hospital.occurrences < min_occurrences
+      min_occurrences = hospital.occurrences
+    end
+    if hospital.occurrences != nil and  hospital.occurrences > max_occurrences
+      max_occurrences = hospital.occurrences
+    end
+
+    # Add to the global list of procedures that'll be used in procedure dropdowns
+    procedure = Procedure.all(name: procedure_name).first
+    if procedure.nil?
+      procedure = Procedure.new
+      procedure.name = procedure_name
+      procedure.save
+    end
   end
 end
 
-puts "Facilities:"
-Hospital.all().each do |hospital|
-    puts hospital.to_json(methods: [:procedures])
+# Set min and max occurrences for each record that was inserted
+hospitals = Hospital.all()
+hospitals.each do |hospital|
+  if min_occurrences != Integer::MAX
+    hospital.min_occurrences = min_occurrences
+  else
+    hospital.min_occurrences = 0
+  end
+
+  hospital.max_occurrences = max_occurrences
+  hospital.save
 end
+
+
+
+# Generate rating_type, procedure, county = nil
+procedures.each do |procedure|
+  min_occurrences = Integer::MAX
+  max_occurrences = 0
+  hospital_names = []
+  hospital_ids = {}
+
+  puts "Creating hospitals for rating_criteria: SSIs procedure #{procedure}"
+  hospitals = Hospital.all({'rating_criteria': 'SSIs', 'procedure': procedure})
+  hospitals.each do |hospital|
+    if not hospital_names.include? hospital.name
+      hospital = Hospital.new hospital
+      hospital.county = nil
+      hospital.save
+      hospital_names << hospital.name
+      hospital_ids[hospital.name] = hospital.id
+    else
+      existing_hospital = Hospital.get(hospital_ids[hospital.name])
+      existing_hospital.occurrences += hospital.occurrences
+      existing_hospital.save
+      hospital = existing_hospital
+    end
+
+    if hospital.occurrences != nil and hospital.occurrences < min_occurrences
+      min_occurrences = hospital.occurrences
+    end
+    if hospital.occurrences != nil and  hospital.occurrences > max_occurrences
+      max_occurrences = hospital.occurrences
+    end
+  end
+
+  # Set min and max occurrences for each record that was inserted
+  hospitals = Hospital.all({'rating_criteria': 'SSIs', 'procedure': procedure, 'county': nil})
+  hospitals.each do |hospital|
+    if min_occurrences != Integer::MAX
+      hospital.min_occurrences = min_occurrences
+    else
+      hospital.min_occurrences = 0
+    end
+
+    hospital.max_occurrences = max_occurrences
+    hospital.save
+  end
+end
+
+
+
+# Generate rating_type, procedure, county = nil
+counties.each do |county|
+  min_occurrences = Integer::MAX
+  max_occurrences = 0
+  hospital_names = []
+  hospital_ids = {}
+
+  puts "Creating hospitals for rating_criteria: SSIs county #{county}"
+  hospitals = Hospital.all({'rating_criteria': 'SSIs', 'county': county})
+  hospitals.each do |hospital|
+    if not hospital_names.include? hospital.name
+      hospital = Hospital.new hospital
+      hospital.procedure = nil
+      hospital.save
+      hospital_names << hospital.name
+      hospital_ids[hospital.name] = hospital.id
+    else
+      existing_hospital = Hospital.get(hospital_ids[hospital.name])
+      existing_hospital.occurrences += hospital.occurrences
+      existing_hospital.save
+      hospital = existing_hospital
+    end
+
+    if hospital.occurrences != nil and hospital.occurrences < min_occurrences
+      min_occurrences = hospital.occurrences
+    end
+    if hospital.occurrences != nil and hospital.occurrences > max_occurrences
+      max_occurrences = hospital.occurrences
+    end
+  end
+
+  # Set min and max occurrences for each record that was inserted
+  hospitals = Hospital.all({'rating_criteria': 'SSIs', 'county': county, 'procedure': nil})
+  hospitals.each do |hospital|
+    if min_occurrences != Integer::MAX
+      hospital.min_occurrences = min_occurrences
+    else
+      hospital.min_occurrences = 0
+    end
+
+    hospital.max_occurrences = max_occurrences
+    hospital.save
+  end
+end
+
+
+
+
+# Generate rating_type, procedure = nil, county = nil
+min_occurrences = Integer::MAX
+max_occurrences = 0
+hospital_names = []
+hospital_ids = {}
+
+puts "Creating hospitals for rating_criteria: SSIs, No county, No procedure"
+hospitals = Hospital.all({'rating_criteria': 'SSIs'})
+hospitals.each do |hospital|
+  if not hospital_names.include? hospital.name
+    hospital = Hospital.new hospital
+    hospital.procedure = nil
+    hospital.county = nil
+    hospital.save
+    hospital_names << hospital.name
+    hospital_ids[hospital.name] = hospital.id
+  else
+    existing_hospital = Hospital.get(hospital_ids[hospital.name])
+    existing_hospital.occurrences += hospital.occurrences
+    existing_hospital.save
+    hospital = existing_hospital
+  end
+
+  if hospital.occurrences != nil and hospital.occurrences < min_occurrences
+    min_occurrences = hospital.occurrences
+  end
+  if hospital.occurrences != nil and hospital.occurrences > max_occurrences
+    max_occurrences = hospital.occurrences
+  end
+end
+
+# Set min and max occurrences for each record that was inserted
+hospitals = Hospital.all({'rating_criteria': 'SSIs', 'procedure': nil, 'county': nil})
+hospitals.each do |hospital|
+  if min_occurrences != Integer::MAX
+    hospital.min_occurrences = min_occurrences
+  else
+    hospital.min_occurrences = 0
+  end
+
+  hospital.max_occurrences = max_occurrences
+  hospital.save
+end
+
+
+
+
+
+
+# puts "Facilities:"
+# Hospital.all().each do |hospital|
+#     #puts hospital.to_json(methods: [:procedures])
+#     puts hospital.to_json()
+# end
 
 

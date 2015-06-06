@@ -107,9 +107,16 @@ class App < Sinatra::Base
     session.delete :user_id
   end
 
+
   get('/hospitals') do
-    return Hospital.all().to_json
+    puts "PARAMS: #{params}"
+    rating_criteria = params['rating_criteria']
+    county = params['county']
+    procedure = params['procedure']
+
+    return Hospital.all({rating_criteria: rating_criteria, county: county, procedure: procedure}).to_json
   end
+
 
   before do
     # # Verify authenticated
