@@ -1,4 +1,6 @@
 
+
+
 App = Em.Application.create({
     LOG_TRANSITIONS: true
 });
@@ -13,11 +15,11 @@ App.Router.map(function() {
 /*
  * Routes
  */
-//App.ApplicationRoute = Em.Route.extend({
-//    setupController: function(controller, model) {
-//        controller.set('fullHeader', true);
-//    }
-//});
+App.ApplicationRoute = Em.Route.extend({
+    setupController: function(controller, model) {
+        controller.set('fullHeader', true);
+    }
+});
 
 App.HospitalsRoute = Em.Route.extend({
     model: function(params) {

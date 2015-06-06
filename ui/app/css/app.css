@@ -3,9 +3,9 @@
 */
 
 body{
-    font-family: Lato;
+    font-family: 'Lato', sans-serif;
     font-size:18px;
-    line-height:1.625;
+    line-height:1.75;
     color:#444444;
 }
 
@@ -27,9 +27,24 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     background-color:#2CD7FF;
 }
 
+.bright-green{
+    background-color:#AAD845;
+}
+
+.purple{
+    background-color:#B665C4;
+}
+
+.yellow{
+    background-color:#E8DC4F;
+}
 /*font colors*/
 .white-font{
     color:#fff;
+}
+
+.bright-blue{
+    color:#2CD7FF;
 }
 
 /*navbar styles*/
@@ -39,6 +54,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 /*padding*/
+
+h3 .glyphicon{
+    padding:5px 10px;
+}
+
 .wizard-title{
     padding-bottom:60px;
 }
@@ -54,11 +74,21 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 /*wizard area styles*/
+
 #wiz-container{
     background:url("../../img/valley.jpg");
     background-size: cover;
-    height:700px;
+    /*height:00px;*/
     background-repeat:no-repeat;
+}
+
+@media(min-width:768px){
+    #wiz-container{
+        background:url("../../img/valley.jpg");
+        background-size: cover;
+        height:700px;
+        background-repeat:no-repeat;
+    }
 }
 
 #wiz-container-small{
@@ -70,12 +100,24 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 .rank-criteria-box{
     width:300px;
-    height:200px;
-    background-color:#7D8789;
+    height:300px;
+    /*background-color:#7D8789;*/
     position:relative;
-    margin:0 auto;
+    margin:10px auto;
+    border-radius:10px;
+    -webkit-box-shadow: 0px 0px 36px -2px rgba(0,0,0,0.59);
+    -moz-box-shadow: 0px 0px 36px -2px rgba(0,0,0,0.59);
+    box-shadow: 0px 0px 36px -2px rgba(0,0,0,0.59);
 }
 
+@media(min-width:768px){
+    .rank-criteria-box{
+        width:100%;
+        height:300px;
+        position:relative;
+        margin:0 auto;
+    }
+}
 .overall-rank1{
     width:300px;
     height:200px;
@@ -89,9 +131,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     background-color:#AAD845;
 }
 
-.about p{
-    max-width:900px;
-    margin: 0 auto;
+#about p{
+    text-indent: 50px;
+    max-width:800px;
+    margin:20px auto;
 }
 
 /*hospital lists*/
