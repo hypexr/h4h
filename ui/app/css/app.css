@@ -1,0 +1,91 @@
+/*Amanda Tjahjadi, Scott Rippee
+ *Hackathon Project for CA Civic Data
+ */
+
+body{
+    font-family: Lato;
+    font-size:18px;
+    line-height:1.625;
+    color:#444444;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: 'Noto Sans', sans-serif; font-weight: 700;
+}
+
+.title-size{
+    font-size:1.778em;
+    line-height:1.4em;
+}
+    
+.sub-heading{
+    font-size:1.33em;
+}
+
+/*colors*/
+.bright-blue{
+    background-color:#2CD7FF;
+}
+
+/*font colors*/
+.white-font{
+    color:#fff;
+}
+
+/*navbar styles*/
+
+.navbar-default .navbar-nav > li > a {
+    color:#fff;
+}
+
+/*padding*/
+.wizard-title{
+    padding-bottom:60px;
+}
+
+.wizard-padding{
+    padding-top:80px;
+    padding-bottom:80px;
+}
+
+.content-padding{
+    padding-top:60px;
+    padding-bottom:60px;
+}
+
+/*wizard area styles*/
+.wiz-container{
+    background:url("../../img/valley.jpg");
+    background-size: cover;
+    height:;
+    background-repeat:no-repeat;
+}
+
+.infection1{
+    width:200px;
+    height:200px;
+    background-color:#7D8789;
+    position:relative;
+    margin:0 auto;
+}
+
+.mortality1{
+    width:200px;
+    height:200px;
+    background-color:#7D8789;
+    position:relative;
+    margin:0 auto;
+}
+
+.overall-rank1{
+    width:200px;
+    height:200px;
+    background-color:#7D8789;
+    position:relative;
+    margin:0 auto;
+}
+
+/*about us*/
+.about{
+    background-color:#AAD845;
+}
