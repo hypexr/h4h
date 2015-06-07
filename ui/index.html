@@ -49,75 +49,57 @@
     </div>
     
     <div id="main-panel-container">
-        {{#if fullHeader}}
-            <div id="wiz-container">
-                <div class="container">
-                    <div class="row wizard-padding">
-                        <div class="col-xs-12">
-                            <h1 class="white-font title-size text-center wizard-title animated fadeIn">
-                                Find a safe hospital in Central California
-                            </h1>
-                        </div>
-                        <div class="col-xs-12 col-sm-4">
-                            {{#link-to 'hospitals' 'SSIs'}}
-                                <div class="rank-criteria-box bright-green animated fadeInUp">
-                                    <img src="img/surgical-infection.png" class="center-block img-responsive">
-                                    <h3 class="white-font text-center">SSIs Infection Rates
+        <div id="wiz-container">
+            <div class="container">
+                <div class="row wizard-padding">
+                    <div class="col-xs-12">
+                        <h1 class="white-font title-size text-center wizard-title animated fadeIn">
+                            Find a safe hospital in Central California
+                        </h1>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        {{#link-to 'hospitals' 'SSIs'}}
+                        <div class="rank-criteria-box bright-green animated fadeInUp">
+                            <img src="img/surgical-infection.png" class="center-block img-responsive">
+                            <h3 class="white-font text-center">SSIs Infection Rates
                                     <span class="glyphicon glyphicon-info-sign white-font" role="button"
-                                    data-placement="top" data-container="body" data-toggle="popover" data-trigger="hover" title="Surgical Site Infection"
-                                    data-content="A surgical site infection is
+                                          data-placement="top" data-container="body" data-toggle="popover" data-trigger="hover" title="Surgical Site Infection"
+                                          data-content="A surgical site infection is
                                     an infection that occurs after surgery in
                                     the part of the body where the surgery took
                                     place."></span></h3>
-                                </div>
-                            {{/link-to}}
                         </div>
-                        <div class="col-xs-12 col-sm-4">
-                            {{#link-to 'hospitals' 'CLABSI'}}
-                                <div class="rank-criteria-box bright-blue animated fadeInUp">
-                                    <img src="img/central-line-infection.png" class="center-block img-responsive">
-                                    <h3 class="white-font text-center">CLABSI Infection Rates
+                        {{/link-to}}
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        {{#link-to 'hospitals' 'CLABSI'}}
+                        <div class="rank-criteria-box bright-blue animated fadeInUp">
+                            <img src="img/central-line-infection.png" class="center-block img-responsive">
+                            <h3 class="white-font text-center">CLABSI Infection Rates
                                     <span class="glyphicon glyphicon-info-sign white-font" role="button"
-                                    data-placement="top" data-container="body" data-toggle="popover" data-trigger="hover" title="Central Line Associated Bloodstream Infection"
-                                    data-content="A central line-associated
+                                          data-placement="top" data-container="body" data-toggle="popover" data-trigger="hover" title="Central Line Associated Bloodstream Infection"
+                                          data-content="A central line-associated
                                     bloodstream infection (CLABSI) is a serious
                                     infection that occurs when germs enter the bloodstream
                                     through the central line."></span></h3>
-                                </div>
-                            {{/link-to}}
                         </div>
-                        <div class="col-xs-12 col-sm-4">
-                            {{#link-to 'hospitals' 'mortality'}}
-                                <div class="rank-criteria-box purple animated fadeInUp">
-                                    <img src="img/mortality.png" class="center-block img-responsive">
-                                    <h3 class="white-font text-center">
-                                    Mortality Rates
-                                    <span class="glyphicon glyphicon-info-sign white-font" role="button"
-                                    data-placement="top" data-container="body" data-toggle="popover" data-trigger="hover" title="Mortality Rate"
-                                    data-content="Information from 2012. Existing health problems taken into consideration."></span></h3>
-                                </div>
-                            {{/link-to}}
-                        </div>
+                        {{/link-to}}
                     </div>
-                </div>
-            </div>
-        {{else}}
-            <div id="wiz-container-small">
-                <div class="container">
-                    <div class="row wizard-padding">
-                        {{#link-to 'hospitals' 'SSIs'}}
-                            <p class="white-font text-center">SSIs Infection Rates</p>
-                        {{/link-to}}
-                        {{#link-to 'hospitals' 'CLABSI'}}
-                            <p class="white-font text-center">CLABSI Infection Rates</p>
-                        {{/link-to}}
+                    <div class="col-xs-12 col-sm-4">
                         {{#link-to 'hospitals' 'mortality'}}
-                            <p class="white-font text-center">Mortality Rates</p>
+                        <div class="rank-criteria-box purple animated fadeInUp">
+                            <img src="img/mortality.png" class="center-block img-responsive">
+                            <h3 class="white-font text-center">
+                                Mortality Rates
+                                    <span class="glyphicon glyphicon-info-sign white-font" role="button"
+                                          data-placement="top" data-container="body" data-toggle="popover" data-trigger="hover" title="Mortality Rate"
+                                          data-content="Information from 2012. Existing health problems taken into consideration."></span></h3>
+                        </div>
                         {{/link-to}}
                     </div>
                 </div>
             </div>
-        {{/if}}
+        </div>
 
         {{outlet}}
 
