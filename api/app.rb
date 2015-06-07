@@ -116,7 +116,7 @@ class App < Sinatra::Base
     county = nil
     procedure = nil
 
-    return Hospital.all({rating_criteria: rating_criteria, county: county, procedure: procedure, order: [ :occurrence_data_available.desc, :display_percentage.asc ]}).to_json
+    return Hospital.all({rating_criteria: rating_criteria, county: county, procedure: procedure, order: [ :display_percentage.asc ]}).to_json
   end
 
 

@@ -36,7 +36,7 @@ class Hospital
       self.occurrences = hospital.occurrences
       self.out_of = hospital.out_of
       self.display_percentage = hospital.display_percentage
-      self.occurrence_data_available = hospital.occurrence_data_available
+      #self.occurrence_data_available = hospital.occurrence_data_available
     end
   end
 end
