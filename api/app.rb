@@ -111,10 +111,12 @@ class App < Sinatra::Base
   get('/hospitals') do
     puts "PARAMS: #{params}"
     rating_criteria = params['rating_criteria']
-    county = params['county']
-    procedure = params['procedure']
+    #county = params['county']
+    #procedure = params['procedure']
+    county = nil
+    procedure = nil
 
-    return Hospital.all({rating_criteria: rating_criteria, county: county, procedure: procedure}).to_json
+    return Hospital.all({rating_criteria: rating_criteria, county: county, procedure: procedure, order: [ :occurrence_data_available.desc, :display_percentage.asc ]}).to_json
   end
 
 

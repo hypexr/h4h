@@ -13,7 +13,7 @@ CREATE TABLE `hospitals` (
   `risk_ratio` INTEGER DEFAULT NULL,
   `min_occurrences` INTEGER DEFAULT NULL,
   `max_occurrences` INTEGER DEFAULT NULL,
-  `display_percentage` FLOAT(5,2) DEFAULT NULL,
+  `display_percentage` INTEGER DEFAULT 0,
   `occurrence_data_available` INTEGER DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `hospitals_rating_criteria_idx` (`rating_criteria`),

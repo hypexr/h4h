@@ -20,7 +20,7 @@ class Hospital
   property :risk_ratio,           Integer
   property :min_occurrences,      Integer
   property :max_occurrences,      Integer
-  property :display_percentage,   Float
+  property :display_percentage,   Integer
   property :occurrence_data_available,   Boolean
 
   # has n, :hospital_procedures

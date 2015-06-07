@@ -49,6 +49,7 @@ def set_hospital_display_percentage(hospital, min_occurrences, max_occurrences)
   #   hospital.display_percentage = (stdandardized_occurrences / top_limit) * 100
   # end
 
+  puts "DISPLAAAYYYYYYYYY PERCENTAGE #{hospital.display_percentage} #{hospital.display_percentage.class}"
   if(hospital.display_percentage == nil)
     if(hospital.out_of == 0)
       hospital.display_percentage = 0
@@ -337,7 +338,7 @@ counties.each do |county|
     #if(rate.is_a? Numeric)
       puts "===================rate #{rate}"
       puts "===================rate #{rate}"
-      hospital.display_percentage = rate.to_f
+      hospital.display_percentage = rate.to_i
     # else
     #   hospital.display_percentage = 0
     #   hospital.occurrence_data_available = false
@@ -391,6 +392,7 @@ procedures.each do |procedure|
     else
       existing_hospital = Hospital.get(hospital_ids[hospital.name])
       existing_hospital.occurrences += hospital.occurrences
+      existing_hospital.display_percentage = (existing_hospital.display_percentage + hospital.display_percentage) / 2
       existing_hospital.save
       hospital = existing_hospital
     end
@@ -434,6 +436,7 @@ counties.each do |county|
     else
       existing_hospital = Hospital.get(hospital_ids[hospital.name])
       existing_hospital.occurrences += hospital.occurrences
+      existing_hospital.display_percentage = (existing_hospital.display_percentage + hospital.display_percentage) / 2
       existing_hospital.save
       hospital = existing_hospital
     end
@@ -477,6 +480,7 @@ hospitals.each do |hospital|
   else
     existing_hospital = Hospital.get(hospital_ids[hospital.name])
     existing_hospital.occurrences += hospital.occurrences
+    existing_hospital.display_percentage = (existing_hospital.display_percentage + hospital.display_percentage) / 2
     existing_hospital.save
     hospital = existing_hospital
   end
