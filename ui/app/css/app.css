@@ -6,7 +6,7 @@ body{
     font-family: 'Lato', sans-serif;
     font-size:18px;
     line-height:1.75;
-    color:#444444;
+    color:#565656;
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -23,8 +23,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 /*colors*/
+
+.sky-blue{
+    background-color:#a7e4f2;    
+}
+
 .bright-blue{
-    background-color:#2CD7FF;
+    background-color:#47d4e2;
 }
 
 .bright-green{
@@ -76,18 +81,18 @@ h3 .glyphicon{
 /*wizard area styles*/
 
 #wiz-container{
-    background:url("../../img/valley.jpg");
-    background-size: cover;
+    
     /*height:00px;*/
-    background-repeat:no-repeat;
+    
 }
 
 @media(min-width:768px){
     #wiz-container{
-        background:url("../../img/valley.jpg");
-        background-size: cover;
+        background-image:url("../../img/city.png");
+        /*background-size: contain;*/
         height:700px;
-        background-repeat:no-repeat;
+        background-repeat:repeat-x;
+        background-position:left bottom;
     }
 }
 
@@ -99,21 +104,23 @@ h3 .glyphicon{
 }
 
 .rank-criteria-box{
-    width:300px;
-    height:300px;
-    /*background-color:#7D8789;*/
+    width:150px;
+    height:150px;
+    background-color:#2cd7ff;
     position:relative;
     margin:10px auto;
     border-radius:10px;
     -webkit-box-shadow: 0px 0px 36px -2px rgba(0,0,0,0.59);
     -moz-box-shadow: 0px 0px 36px -2px rgba(0,0,0,0.59);
     box-shadow: 0px 0px 36px -2px rgba(0,0,0,0.59);
+    opacity:0.8;
+    border:6px #e3fcff solid;
 }
 
 @media(min-width:768px){
     .rank-criteria-box{
-        width:100%;
-        height:300px;
+        width:250px;
+    height:250px;
         position:relative;
         margin:0 auto;
     }
