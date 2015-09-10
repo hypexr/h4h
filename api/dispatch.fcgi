@@ -5,7 +5,8 @@ ENV["GEM_HOME"] = "/home1/fatpengu/ruby/gems"
 require 'rubygems'
 require 'fcgi'
 require 'sinatra'
-
+require './app'
+ 
 module Rack
   class Request
     def path_info
@@ -19,8 +20,12 @@ end
 
 # Define your Sinatra application here
 class MyApp < Sinatra::Application
+  get '/api/hi' do
+    "/api/hi---- Hello World!"
+  end
+
   get '/hi' do
-    "Hello World!"
+    "/hi Hello World!"
   end
 end
 
@@ -29,8 +34,9 @@ builder = Rack::Builder.new do
   use Rack::ShowExceptions
 
   map '/' do
-    run MyApp.new
+    run App.new
   end
 end
 
 Rack::Handler::FastCGI.run(builder)
+

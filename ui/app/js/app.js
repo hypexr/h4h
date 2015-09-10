@@ -83,7 +83,7 @@ App.HospitalsController = Em.ObjectController.extend({
  *
  */
 App.reopen({
-    apiBaseUri: 'api',
+    apiBaseUri: '../api',
 });
 
 

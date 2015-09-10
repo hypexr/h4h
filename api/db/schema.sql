@@ -1,5 +1,5 @@
 
-DROP TABLE `hospitals`;
+DROP TABLE IF EXISTS `hospitals`;
 
 CREATE TABLE `hospitals` (
   `id` MEDIUMINT NOT NULL AUTO_INCREMENT,
@@ -22,3 +22,13 @@ CREATE TABLE `hospitals` (
   KEY `hospitals_display_percentage_idx` (`display_percentage`),
   KEY `hospitals_oda_idx` (`occurrence_data_available`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `procedures`;
+
+CREATE TABLE `procedures` (
+  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8
+
