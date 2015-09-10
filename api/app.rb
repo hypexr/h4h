@@ -9,7 +9,6 @@ require 'soda/client'
 
 require 'rest-client'
 
-require_relative 'authorization'
 require_relative 'models/user'
 require_relative 'models/comment'
 require_relative 'models/hospital'

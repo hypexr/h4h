@@ -122,7 +122,7 @@ counties.each do |county|
     hospital.procedure = procedure_name
     hospital.county = county
     hospital.rating_criteria = 'SSIs'
-    hospital.occurrences = record['infection_count']
+    hospital.occurrencs = record['infection_count']
     hospital.occurrences = 0 if hospital.occurrences.nil?
     hospital.out_of = out_of
     hospital.out_of = 0 if hospital.out_of.nil?
