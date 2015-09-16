@@ -1,0 +1,14 @@
+{
+  "name": "bindStyle-ember-helper",
+  "homepage": "https://github.com/yderidde/bindstyle-ember-helper",
+  "_release": "f4b9135fc3",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "f4b9135fc339867ac5c3b256304d920a91009fb8"
+  },
+  "_source": "git://github.com/yderidde/bindstyle-ember-helper.git",
+  "_target": "*",
+  "_originalSource": "bindStyle-ember-helper",
+  "_direct": true
+}

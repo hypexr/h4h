@@ -33,7 +33,7 @@ class App < Sinatra::Base
     "Application is running"
   end
 
-  get '/api/test_data' do
+  get %r{/(api/)?test_data} do
     #client = SODA::Client.new({:domain => "cdph.data.ca.gov"})
     #soda_response = client.get("ezms-cei8", {"$limit": 5})
 
@@ -49,14 +49,14 @@ class App < Sinatra::Base
     return soda_response.to_json
   end
 
-  get '/api/test_data2' do
+  get %r{/(api/)?test_data2} do
     url = "http://api.censusreporter.org/1.0/data/show/latest?table_ids=B17001&geo_ids=16000US0627000"
 
     response = RestClient.get  url
     return response.to_s
   end
 
-  get('/api/hospitals') do
+  get %r{/(api/)?hospitals} do
     puts "PARAMS: #{params}"
     rating_criteria = params['rating_criteria']
     #county = params['county']
