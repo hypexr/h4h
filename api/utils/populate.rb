@@ -357,226 +357,226 @@ end
 
 
 
-###
-###
-### Ingest Infection mortality data
-###
-###
-##min_occurrences = Integer::MAX
-##max_occurrences = 0
-##procedures = []
-##counties.each do |county|
-##  puts
-##  puts "#{county} Mortality -----------------------------"
-##  puts
-##
-##  client = SODA::Client.new({:domain => "chhs.data.ca.gov"})
-##  soda_response = client.get("652m-fw2m", {"county" => county})
-##
-##  #puts soda_response.to_s
-##
-##  soda_response.each do |record|
-##
-##    # Add procedure if it doesn't already exist to the complete list of procedures
-##    procedure_name = record['procedure_condition'].strip
-##    procedure = Procedure.all(name: procedure_name).first
-##    if procedure.nil?
-##      procedure = Procedure.new
-##      procedure.name = procedure_name
-##      procedure.save
-##    end
-##
-##    if not procedures.include? procedure.name
-##      procedures << procedure.name
-##    end
-##  end
-##
-##  soda_response.each do |record|
-##    procedure_name = record['procedure_condition']
-##    facility_name = record['hospital']
-##    puts "County #{record['county']}"
-##    puts "Facility #{facility_name}"
-##    puts "Occurrences #{record['of_deaths']}"
-##    puts "Out of #{record['of_cases']}"
-##    puts "Procedure #{procedure_name}"
-##    puts
-##
-##    hospital = Hospital.new
-##    hospital.name = facility_name
-##    hospital.procedure = procedure_name
-##    hospital.county = county
-##    hospital.rating_criteria = 'mortality'
-##    hospital.occurrences = record['of_deaths']
-##    hospital.occurrences = 0 if hospital.occurrences.nil?
-##    hospital.out_of = record['of_cases']
-##    hospital.out_of = 0 if hospital.out_of.nil?
-##    rate = record['risk_adjuested_mortality_rate']
-##    #if(rate.is_a? Numeric)
-##      puts "===================rate #{rate}"
-##      puts "===================rate #{rate}"
-##      hospital.display_percentage = rate.to_i
-##    # else
-##    #   hospital.display_percentage = 0
-##    #   hospital.occurrence_data_available = false
-##    # end
-##    hospital.save
-##
-##    if hospital.occurrences != nil and hospital.occurrences < min_occurrences
-##      min_occurrences = hospital.occurrences
-##    end
-##    if hospital.occurrences != nil and  hospital.occurrences > max_occurrences
-##      max_occurrences = hospital.occurrences
-##    end
-##
-##    # Add to the global list of procedures that'll be used in procedure dropdowns
-##    procedure = Procedure.all(name: procedure_name).first
-##    if procedure.nil?
-##      procedure = Procedure.new
-##      procedure.name = procedure_name
-##      procedure.save
-##    end
-##  end
-##end
-##
-### Set min and max occurrences for each record that was inserted
-##min_occurrences = 0 if min_occurrences != Integer::MAX
-##hospitals = Hospital.all()
-##hospitals.each do |hospital|
-##  hospital.min_occurrences = min_occurrences
-##  hospital.max_occurrences = max_occurrences
-##  mortality_set_hospital_display_percentage(hospital)
-##end
-##
-##
-##
-### Generate rating_type, procedure, county = nil
-##procedures.each do |procedure|
-##  min_occurrences = Integer::MAX
-##  max_occurrences = 0
-##  hospital_names = []
-##  hospital_ids = {}
-##
-##  puts "Creating hospitals for rating_criteria: mortality procedure #{procedure}"
-##  hospitals = Hospital.all({'rating_criteria' => 'mortality', 'procedure' => procedure})
-##  hospitals.each do |hospital|
-##    if not hospital_names.include? hospital.name
-##      hospital = Hospital.new hospital
-##      hospital.county = nil
-##      hospital.save
-##      hospital_names << hospital.name
-##      hospital_ids[hospital.name] = hospital.id
-##    else
-##      existing_hospital = Hospital.get(hospital_ids[hospital.name])
-##      existing_hospital.occurrences += hospital.occurrences
-##      existing_hospital.display_percentage = (existing_hospital.display_percentage + hospital.display_percentage) / 2
-##      existing_hospital.save
-##      hospital = existing_hospital
-##    end
-##
-##    if hospital.occurrences != nil and hospital.occurrences < min_occurrences
-##      min_occurrences = hospital.occurrences
-##    end
-##    if hospital.occurrences != nil and  hospital.occurrences > max_occurrences
-##      max_occurrences = hospital.occurrences
-##    end
-##  end
-##
-##  # Set min and max occurrences for each record that was inserted
-##  min_occurrences = 0 if min_occurrences != Integer::MAX
-##  hospitals = Hospital.all({'rating_criteria' => 'mortality', 'procedure' => procedure, 'county' => nil})
-##  hospitals.each do |hospital|
-##    hospital.min_occurrences = min_occurrences
-##    hospital.max_occurrences = max_occurrences
-##    mortality_set_hospital_display_percentage(hospital)
-##  end
-##end
-##
-##
-##
-### Generate rating_type, county, procedure = nil
-##counties.each do |county|
-##  min_occurrences = Integer::MAX
-##  max_occurrences = 0
-##  hospital_names = []
-##  hospital_ids = {}
-##
-##  puts "Creating hospitals for rating_criteria: mortality county #{county}"
-##  hospitals = Hospital.all({'rating_criteria' => 'mortality', 'county' => county})
-##  hospitals.each do |hospital|
-##    if not hospital_names.include? hospital.name
-##      hospital = Hospital.new hospital
-##      hospital.procedure = nil
-##      hospital.save
-##      hospital_names << hospital.name
-##      hospital_ids[hospital.name] = hospital.id
-##    else
-##      existing_hospital = Hospital.get(hospital_ids[hospital.name])
-##      existing_hospital.occurrences += hospital.occurrences
-##      existing_hospital.display_percentage = (existing_hospital.display_percentage + hospital.display_percentage) / 2
-##      existing_hospital.save
-##      hospital = existing_hospital
-##    end
-##
-##    if hospital.occurrences != nil and hospital.occurrences < min_occurrences
-##      min_occurrences = hospital.occurrences
-##    end
-##    if hospital.occurrences != nil and hospital.occurrences > max_occurrences
-##      max_occurrences = hospital.occurrences
-##    end
-##  end
-##
-##  # Set min and max occurrences for each record that was inserted
-##  min_occurrences = 0 if min_occurrences != Integer::MAX
-##  hospitals = Hospital.all({'rating_criteria' => 'mortality', 'county' => county, 'procedure' => nil})
-##  hospitals.each do |hospital|
-##    hospital.min_occurrences = min_occurrences
-##    hospital.max_occurrences = max_occurrences
-##    mortality_set_hospital_display_percentage(hospital)
-##  end
-##end
-##
-##
-##
-### Generate rating_type, procedure = nil, county = nil
-##min_occurrences = Integer::MAX
-##max_occurrences = 0
-##hospital_names = []
-##hospital_ids = {}
-##
-##puts "Creating hospitals for rating_criteria: mortality, No county, No procedure"
-##hospitals = Hospital.all({'rating_criteria' => 'mortality'})
-##hospitals.each do |hospital|
-##  if not hospital_names.include? hospital.name
-##    hospital = Hospital.new hospital
-##    hospital.procedure = nil
-##    hospital.county = nil
-##    hospital.save
-##    hospital_names << hospital.name
-##    hospital_ids[hospital.name] = hospital.id
-##  else
-##    existing_hospital = Hospital.get(hospital_ids[hospital.name])
-##    existing_hospital.occurrences += hospital.occurrences
-##    existing_hospital.display_percentage = (existing_hospital.display_percentage + hospital.display_percentage) / 2
-##    existing_hospital.save
-##    hospital = existing_hospital
-##  end
-##
-##  if hospital.occurrences != nil and hospital.occurrences < min_occurrences
-##    min_occurrences = hospital.occurrences
-##  end
-##  if hospital.occurrences != nil and hospital.occurrences > max_occurrences
-##    max_occurrences = hospital.occurrences
-##  end
-##end
-##
-### Set min and max occurrences for each record that was inserted
-##min_occurrences = 0 if min_occurrences != Integer::MAX
-##hospitals = Hospital.all({'rating_criteria' => 'mortality', 'procedure' => nil, 'county' => nil})
-##hospitals.each do |hospital|
-##  hospital.min_occurrences = min_occurrences
-##  hospital.max_occurrences = max_occurrences
-##  mortality_set_hospital_display_percentage(hospital)
-##end
+#
+#
+# Ingest Infection mortality data
+#
+#
+min_occurrences = Integer::MAX
+max_occurrences = 0
+procedures = []
+counties.each do |county|
+ puts
+ puts "#{county} Mortality -----------------------------"
+ puts
+
+ client = SODA::Client.new({:domain => "chhs.data.ca.gov"})
+ soda_response = client.get("rpkf-ugbp", {"county" => county})
+
+ #puts soda_response.to_s
+
+ soda_response.each do |record|
+
+   # Add procedure if it doesn't already exist to the complete list of procedures
+   procedure_name = record['procedure_condition'].strip
+   procedure = Procedure.all(name: procedure_name).first
+   if procedure.nil?
+     procedure = Procedure.new
+     procedure.name = procedure_name
+     procedure.save
+   end
+
+   if not procedures.include? procedure.name
+     procedures << procedure.name
+   end
+ end
+
+ soda_response.each do |record|
+   procedure_name = record['procedure_condition']
+   facility_name = record['hospital']
+   puts "County #{record['county']}"
+   puts "Facility #{facility_name}"
+   puts "Occurrences #{record['of_deaths']}"
+   puts "Out of #{record['of_cases']}"
+   puts "Procedure #{procedure_name}"
+   puts
+
+   hospital = Hospital.new
+   hospital.name = facility_name
+   hospital.procedure = procedure_name
+   hospital.county = county
+   hospital.rating_criteria = 'mortality'
+   hospital.occurrences = record['of_deaths']
+   hospital.occurrences = 0 if hospital.occurrences.nil?
+   hospital.out_of = record['of_cases']
+   hospital.out_of = 0 if hospital.out_of.nil?
+   rate = record['risk_adjuested_mortality_rate']
+   #if(rate.is_a? Numeric)
+     puts "===================rate #{rate}"
+     puts "===================rate #{rate}"
+     hospital.display_percentage = rate.to_i
+   # else
+   #   hospital.display_percentage = 0
+   #   hospital.occurrence_data_available = false
+   # end
+   hospital.save
+
+   if hospital.occurrences != nil and hospital.occurrences < min_occurrences
+     min_occurrences = hospital.occurrences
+   end
+   if hospital.occurrences != nil and  hospital.occurrences > max_occurrences
+     max_occurrences = hospital.occurrences
+   end
+
+   # Add to the global list of procedures that'll be used in procedure dropdowns
+   procedure = Procedure.all(name: procedure_name).first
+   if procedure.nil?
+     procedure = Procedure.new
+     procedure.name = procedure_name
+     procedure.save
+   end
+ end
+end
+
+# Set min and max occurrences for each record that was inserted
+min_occurrences = 0 if min_occurrences != Integer::MAX
+hospitals = Hospital.all()
+hospitals.each do |hospital|
+ hospital.min_occurrences = min_occurrences
+ hospital.max_occurrences = max_occurrences
+ mortality_set_hospital_display_percentage(hospital)
+end
+
+
+
+# Generate rating_type, procedure, county = nil
+procedures.each do |procedure|
+ min_occurrences = Integer::MAX
+ max_occurrences = 0
+ hospital_names = []
+ hospital_ids = {}
+
+ puts "Creating hospitals for rating_criteria: mortality procedure #{procedure}"
+ hospitals = Hospital.all({'rating_criteria' => 'mortality', 'procedure' => procedure})
+ hospitals.each do |hospital|
+   if not hospital_names.include? hospital.name
+     hospital = Hospital.new hospital
+     hospital.county = nil
+     hospital.save
+     hospital_names << hospital.name
+     hospital_ids[hospital.name] = hospital.id
+   else
+     existing_hospital = Hospital.get(hospital_ids[hospital.name])
+     existing_hospital.occurrences += hospital.occurrences
+     existing_hospital.display_percentage = (existing_hospital.display_percentage + hospital.display_percentage) / 2
+     existing_hospital.save
+     hospital = existing_hospital
+   end
+
+   if hospital.occurrences != nil and hospital.occurrences < min_occurrences
+     min_occurrences = hospital.occurrences
+   end
+   if hospital.occurrences != nil and  hospital.occurrences > max_occurrences
+     max_occurrences = hospital.occurrences
+   end
+ end
+
+ # Set min and max occurrences for each record that was inserted
+ min_occurrences = 0 if min_occurrences != Integer::MAX
+ hospitals = Hospital.all({'rating_criteria' => 'mortality', 'procedure' => procedure, 'county' => nil})
+ hospitals.each do |hospital|
+   hospital.min_occurrences = min_occurrences
+   hospital.max_occurrences = max_occurrences
+   mortality_set_hospital_display_percentage(hospital)
+ end
+end
+
+
+
+# Generate rating_type, county, procedure = nil
+counties.each do |county|
+ min_occurrences = Integer::MAX
+ max_occurrences = 0
+ hospital_names = []
+ hospital_ids = {}
+
+ puts "Creating hospitals for rating_criteria: mortality county #{county}"
+ hospitals = Hospital.all({'rating_criteria' => 'mortality', 'county' => county})
+ hospitals.each do |hospital|
+   if not hospital_names.include? hospital.name
+     hospital = Hospital.new hospital
+     hospital.procedure = nil
+     hospital.save
+     hospital_names << hospital.name
+     hospital_ids[hospital.name] = hospital.id
+   else
+     existing_hospital = Hospital.get(hospital_ids[hospital.name])
+     existing_hospital.occurrences += hospital.occurrences
+     existing_hospital.display_percentage = (existing_hospital.display_percentage + hospital.display_percentage) / 2
+     existing_hospital.save
+     hospital = existing_hospital
+   end
+
+   if hospital.occurrences != nil and hospital.occurrences < min_occurrences
+     min_occurrences = hospital.occurrences
+   end
+   if hospital.occurrences != nil and hospital.occurrences > max_occurrences
+     max_occurrences = hospital.occurrences
+   end
+ end
+
+ # Set min and max occurrences for each record that was inserted
+ min_occurrences = 0 if min_occurrences != Integer::MAX
+ hospitals = Hospital.all({'rating_criteria' => 'mortality', 'county' => county, 'procedure' => nil})
+ hospitals.each do |hospital|
+   hospital.min_occurrences = min_occurrences
+   hospital.max_occurrences = max_occurrences
+   mortality_set_hospital_display_percentage(hospital)
+ end
+end
+
+
+
+# Generate rating_type, procedure = nil, county = nil
+min_occurrences = Integer::MAX
+max_occurrences = 0
+hospital_names = []
+hospital_ids = {}
+
+puts "Creating hospitals for rating_criteria: mortality, No county, No procedure"
+hospitals = Hospital.all({'rating_criteria' => 'mortality'})
+hospitals.each do |hospital|
+ if not hospital_names.include? hospital.name
+   hospital = Hospital.new hospital
+   hospital.procedure = nil
+   hospital.county = nil
+   hospital.save
+   hospital_names << hospital.name
+   hospital_ids[hospital.name] = hospital.id
+ else
+   existing_hospital = Hospital.get(hospital_ids[hospital.name])
+   existing_hospital.occurrences += hospital.occurrences
+   existing_hospital.display_percentage = (existing_hospital.display_percentage + hospital.display_percentage) / 2
+   existing_hospital.save
+   hospital = existing_hospital
+ end
+
+ if hospital.occurrences != nil and hospital.occurrences < min_occurrences
+   min_occurrences = hospital.occurrences
+ end
+ if hospital.occurrences != nil and hospital.occurrences > max_occurrences
+   max_occurrences = hospital.occurrences
+ end
+end
+
+# Set min and max occurrences for each record that was inserted
+min_occurrences = 0 if min_occurrences != Integer::MAX
+hospitals = Hospital.all({'rating_criteria' => 'mortality', 'procedure' => nil, 'county' => nil})
+hospitals.each do |hospital|
+ hospital.min_occurrences = min_occurrences
+ hospital.max_occurrences = max_occurrences
+ mortality_set_hospital_display_percentage(hospital)
+end
 
 
 
