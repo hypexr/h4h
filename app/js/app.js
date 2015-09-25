@@ -24,6 +24,7 @@ App.ApplicationRoute = Em.Route.extend({
 App.HospitalsRoute = Em.Route.extend({
     model: function(params) {
         //return App.Hospital.fetch({'rating_criteria': params.criteria_id, 'county': 'Fresno'});
+        
         return App.Hospital.fetch({'rating_criteria': params.criteria_id});
     }
 
@@ -38,6 +39,11 @@ App.HospitalsRoute = Em.Route.extend({
     //},
 });
 
+App.LoadingRoute = Ember.Route.extend({
+  renderTemplate: function() {
+    this.render('working');
+  }
+});
 
 /*
  * Controllers

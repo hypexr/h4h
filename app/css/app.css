@@ -2,6 +2,17 @@
  *Hackathon Project for CA Civic Data
 */
 
+@font-face {
+  font-family: 'Gentleman';
+  src:  url('../../fonts/gentleman-800-bold-webfont.eot');
+  src:  url('../../fonts/gentleman-800-bold-webfont.woff2') format('woff2'),
+        url('../../fonts/gentleman-800-bold-webfont.woff') format('woff'),
+        url('../../fonts/gentleman-800-bold-webfont.ttf') format('truetype'),
+        url('../../fonts/gentleman-800-bold-webfont.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body{
     font-family: 'Lato', sans-serif;
     font-size:18px;
@@ -10,7 +21,7 @@ body{
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    font-family: 'Noto Sans', sans-serif; font-weight: 700;
+    font-family: 'Gentleman', sans-serif; font-weight: 800;
 }
 
 .title-size{
@@ -80,9 +91,12 @@ h3 .glyphicon{
 
 /*wizard area styles*/
 
+.loading-pane{
+    padding-top:30px;
+}
+
 #wiz-container{
     
-    /*height:00px;*/
     
 }
 
@@ -131,6 +145,76 @@ h3 .glyphicon{
     background-color:#7D8789;
     position:relative;
     margin:0 auto;
+}
+
+/*clouds*/
+
+#cloud-container{
+    padding:100px 0;
+    position:absolute;
+    width:100%;
+    overflow:hidden;
+
+}
+
+.cloud{
+    width: 200px;
+    height: 60px;
+    background: #fff;
+    border-radius: 200px;
+    -moz-border-radius: 200px;
+    -webkit-border-radius: 200px;
+    
+    position: relative; 
+}
+
+/*cloud FX*/
+.x1 {
+    transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    opacity: 0.7; 
+    -webkit-animation: moveclouds 70s linear infinite;
+    -moz-animation: moveclouds 70s linear infinite;
+    -o-animation: moveclouds 70s linear infinite;
+}
+
+
+.x2 {
+    left: 300px;
+    -webkit-transform: scale(0.6);
+    -moz-transform: scale(0.6);
+    transform: scale(0.6);
+    opacity: 0.6; 
+    -webkit-animation: moveclouds 140s linear infinite;
+    -moz-animation: moveclouds 140s linear infinite;
+    -o-animation: moveclouds 140s linear infinite;
+}
+
+.x3 {
+    left: 100px;
+    top: 100px;
+    -webkit-transform: scale(0.4);
+    -moz-transform: scale(0.4);
+    transform: scale(0.4);
+    opacity: 0.5; 
+    -webkit-animation: moveclouds 110s linear infinite;
+    -moz-animation: moveclouds 110s linear infinite;
+    -o-animation: moveclouds 110s linear infinite;
+}
+
+/*cloud animation*/
+@-webkit-keyframes moveclouds {
+	0% {margin-left: 2000px;}
+	100% {margin-left: -1000px;}
+}
+@-moz-keyframes moveclouds {
+	0% {margin-left: 2000px;}
+	100% {margin-left: -1000px;}
+}
+@-o-keyframes moveclouds {
+	0% {margin-left: 2000px;}
+	100% {margin-left: -1000px;}
 }
 
 /*about us*/
