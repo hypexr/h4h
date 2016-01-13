@@ -65,30 +65,42 @@
                         <h1 class=" title-size text-center wizard-title animated fadeIn">
                             Find a safe hospital in Central California
                         </h1>
+                        <p class="text-center" style="margin-top: -60px; font-size: 0.6em;">
+                            Disclaimer: That charts are generated from data obtained from chhs.data.ca.gov,
+                            California's open health data portal.
+                            <br />
+                            The data and results have not been tested for accuracy. The hospital percentages
+                            have been scaled
+                            <br />
+                            from the available indicators for comparison purposes only
+                            and are not the actual values.
+                        </p>
                     </div>
-                    <div class="col-xs-12 col-sm-4">
-                        {{#link-to 'hospitals' 'SSIs'}}
-                        <div class="rank-criteria-box animated fadeInUp">
-                            <img src="img/surgical-infection.png" class="center-block img-responsive">
-                            <h3 class="white-font text-center">SSIs Infection Rates</h3>
+                    <div style="margin-top: 170px;">
+                        <div class="col-xs-12 col-sm-4">
+                            {{#link-to 'hospitals' 'SSIs'}}
+                            <div class="rank-criteria-box animated fadeInUp">
+                                <img src="img/surgical-infection.png" class="center-block img-responsive">
+                                <h4 class="white-font text-center" style="margin-top: 20px;">SSIs Infection Rates <br/><small>(2012)</small></h4>
+                            </div>
+                            {{/link-to}}
                         </div>
-                        {{/link-to}}
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                        {{#link-to 'hospitals' 'CLABSI'}}
-                        <div class="rank-criteria-box animated fadeInUp">
-                            <img src="img/central-line-infection.png" class="center-block img-responsive">
-                            <h3 class="white-font text-center">CLABSI Infection Rates</h3>
+                        <div class="col-xs-12 col-sm-4">
+                            {{#link-to 'hospitals' 'CLABSI'}}
+                            <div class="rank-criteria-box animated fadeInUp">
+                                <img src="img/central-line-infection.png" class="center-block img-responsive">
+                                <h4 class="white-font text-center" style="margin-top: 20px;">CLABSI Infection Rates <br /><small>(2012)</small></h4>
+                            </div>
+                            {{/link-to}}
                         </div>
-                        {{/link-to}}
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                        {{#link-to 'hospitals' 'mortality'}}
-                        <div class="rank-criteria-box animated fadeInUp">
-                            <img src="img/mortality.png" class="center-block img-responsive">
-                            <h3 class="white-font text-center">Mortality Rates</h3>
+                        <div class="col-xs-12 col-sm-4">
+                            {{#link-to 'hospitals' 'mortality'}}
+                            <div class="rank-criteria-box animated fadeInUp">
+                                <img src="img/mortality.png" class="center-block img-responsive">
+                                <h4 class="white-font text-center" style="margin-top: 20px;">Mortality Rates <br /><small>(2012 - 2013)</small></h4>
+                            </div>
+                            {{/link-to}}
                         </div>
-                        {{/link-to}}
                     </div>
                 </div>
             </div>
